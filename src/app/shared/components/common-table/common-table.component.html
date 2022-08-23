@@ -1,0 +1,25 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let col of columns">
+          <th scope="col" colspan="1">
+            {{ col.displayName || col.field }}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody *ngIf="data?.length; else noData">
+      <tr *ngFor="let row of data; let i = index">
+        <td *ngFor="let col of columns; let j = index">
+          {{ row[col.field] }}
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr class="text-center">
+        <td colspan="12">No data</td>
+      </tr>
+    </ng-template>
+  </table>
+</div>

@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center align-items-center height-100vh">
+  <form
+    [formGroup]="loginForm"
+    class="p-3 border col-sm-6 col-md-6 col-lg-3"
+    (ngSubmit)="onSubmit()"
+  >
+    <h3 class="text-center">Login</h3>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        id="email"
+        aria-describedby="emailHelp"
+        formsError="Email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="password"
+        id="password"
+        aria-describedby="passwordHelp"
+        formsError="Password"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [validationControl]="loginForm"
+    >
+      Submit
+    </button>
+  </form>
+</div>
