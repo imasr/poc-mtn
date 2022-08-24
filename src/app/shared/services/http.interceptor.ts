@@ -7,18 +7,12 @@ import {
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
-    if (environment.production)
-      request = request.clone({
-        withCredentials: true,
-      });
-
     return next.handle(request).pipe(
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse) {

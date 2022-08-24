@@ -22,9 +22,9 @@ export class DashboardComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(page = 1) {
+  getUsers() {
     this.apiService
-      .get(`https://reqres.in/api/users?page=${page}`)
+      .get(`https://reqres.in/api/users`)
       .then((resp) => {
         this.allUsers = resp.data;
       })
