@@ -1,0 +1,81 @@
+<app-navbar header="Add Users"></app-navbar>
+
+<div class="p-3">
+  <h3>Users</h3>
+  <common-table [columns]="userColumn" [data]="userList"></common-table>
+</div>
+<div class="p-4">
+  <form
+    [formGroup]="addUserForm"
+    class="row p-3 mt-2 border bg-light"
+    (ngSubmit)="onSubmit()"
+  >
+    <h3 class="text-center">Add New User</h3>
+    <div class="mb-3 col-auto">
+      <label for="id" class="form-label">Id</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="id"
+        id="id"
+        aria-describedby="idHelp"
+        formsError="Id"
+      />
+    </div>
+    <div class="mb-3 col-auto">
+      <label for="first_name" class="form-label">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="first_name"
+        (ngModelChange)="updateValidator('first_name')"
+        id="first_name"
+        aria-describedby="first_nameHelp"
+        formsError="First Name"
+      />
+    </div>
+    <div class="mb-3 col-auto">
+      <label for="last_name" class="form-label">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="last_name"
+        (ngModelChange)="updateValidator('last_name')"
+        id="last_name"
+        aria-describedby="last_nameHelp"
+        formsError="Last Name"
+      />
+    </div>
+    <div class="mb-3 col-auto">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        id="email"
+        aria-describedby="emailHelp"
+        formsError="Email"
+      />
+    </div>
+    <div class="mb-3 col-auto">
+      <label for="avatar" class="form-label">Avatar</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="avatar"
+        id="avatar"
+        aria-describedby="avatarHelp"
+        formsError="Avatar"
+      />
+    </div>
+    <div class="col-auto align-button">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [validationControl]="addUserForm"
+      >
+        Create
+      </button>
+    </div>
+  </form>
+</div>

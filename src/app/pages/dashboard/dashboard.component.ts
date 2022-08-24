@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { AuthGuardService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,30 +9,17 @@ import { ApiService } from 'src/app/shared/services/api.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  employeesColumns: any[] = [
-    { field: 'id' },
-    { field: 'employee_name' },
-    { field: 'Doris Wilder' },
-    { field: 'employee_salary' },
-    { field: 'employee_age' },
-    { field: 'profile_image' },
-  ];
-  employees: any;
-  allUsers: any;
+  allUsers: {
+    first_name: string;
+    last_name: string;
+    avatar: string;
+    email: string;
+  }[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.getUsers();
-    this.getEmployees();
-  }
-  getEmployees() {
-    this.apiService
-      .get('https://dummy.restapiexample.com/api/v1/employees')
-      .then(({ data }) => {
-        this.employees = data;
-      })
-      .catch((err) => console.error(err));
   }
 
   getUsers(page = 1) {
@@ -40,5 +29,9 @@ export class DashboardComponent implements OnInit {
         this.allUsers = resp.data;
       })
       .catch((err) => console.error(err));
+  }
+
+  createNewUser() {
+    this.router.navigate(['/add-user']);
   }
 }

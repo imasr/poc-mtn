@@ -1,1 +1,18 @@
-<common-table [columns]="employeesColumns" [data]="employees"></common-table>
+<app-navbar header="Dashboard"></app-navbar>
+
+<div class="d-flex justify-content-between p-2">
+  <h3>Employee</h3>
+  <button type="button" class="btn btn-primary" (click)="createNewUser()">
+    Create
+  </button>
+</div>
+
+<div class="d-flex flex-wrap">
+  <common-card
+    *ngFor="let user of allUsers"
+    [avatar]="user.avatar"
+    [email]="user.email"
+    [last_name]="user.last_name"
+    [first_name]="user.first_name"
+  ></common-card>
+</div>

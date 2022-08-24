@@ -1,31 +1,20 @@
 import { Injectable } from '@angular/core';
+import { CanLoad, Router } from '@angular/router';
 
-export interface UserObject {
-  firstName?: string;
-  lastName?: string;
-  fullName?: string;
-  attuid?: string;
-  email?: string;
-  middleName?: string;
-  phone?: string;
-  manageruid?: string;
-  attEmail?: string;
-  hrid?: string;
-}
+@Injectable()
+export class AuthGuardService implements CanLoad {
+  constructor(private router: Router) {}
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthService {
-  userWorkflowDetail: any = {};
+  logeddInUser: { email?: string; password?: string } = {};
 
-  constructor() {}
-
-  public set setUserWorflow(v: string) {
-    this.userWorkflowDetail = v;
-  }
-
-  public get getUserWorflow() {
-    return this.userWorkflowDetail;
+  canLoad() {
+    let user: any = sessionStorage.getItem('user');
+    user = user ? JSON.parse(user) : null;
+    if (user?.email) {
+      this.logeddInUser = user;
+      return true;
+    }
+    this.router.navigate(['/']);
+    return false;
   }
 }
