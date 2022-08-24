@@ -30,7 +30,7 @@ const routes: Routes = [
       import('./pages/add-user/add-user.module').then((m) => m.AddUserModule),
     canLoad: [AuthGuardService],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

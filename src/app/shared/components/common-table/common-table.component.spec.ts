@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommonTableComponent } from './common-table.component';
 
-describe('CardComponent', () => {
+describe('CommonTableComponent', () => {
   let component: CommonTableComponent;
   let fixture: ComponentFixture<CommonTableComponent>;
 
