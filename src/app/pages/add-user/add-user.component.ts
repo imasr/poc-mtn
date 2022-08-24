@@ -7,6 +7,7 @@ import {
 } from 'src/app/shared/utility/form-validator';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { downloadFile, resetForm } from 'src/app/shared/utility/utils';
+import { AuthGuardService } from 'src/app/shared/services/auth-guard.service';
 
 @Component({
   selector: 'app-add-user',
@@ -15,6 +16,7 @@ import { downloadFile, resetForm } from 'src/app/shared/utility/utils';
 })
 export class AddUserComponent implements OnInit {
   userList: any[] = [];
+
   userColumn: any[] = [
     { field: 'id', displayName: 'Id' },
     { field: 'first_name', displayName: 'First Name' },
@@ -46,7 +48,11 @@ export class AddUserComponent implements OnInit {
     }),
   });
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private user: AuthGuardService) {}
+
+  get userEmail() {
+    return this.user.logeddInUser.email || '';
+  }
 
   updateValidator(field: string) {
     const field2 = field == 'last_name' ? 'first_name' : 'last_name';

@@ -8,7 +8,7 @@ import {
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 

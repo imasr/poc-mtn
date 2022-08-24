@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { AuthGuardService } from 'src/app/shared/services/auth.service';
+import { AuthGuardService } from 'src/app/shared/services/auth-guard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,8 +16,15 @@ export class DashboardComponent implements OnInit {
     email: string;
   }[] = [];
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private user: AuthGuardService
+  ) {}
 
+  get userEmail() {
+    return this.user.logeddInUser.email || '';
+  }
   ngOnInit(): void {
     this.getUsers();
   }

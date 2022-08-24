@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from 'src/app/shared/directives/directives.module';
 import { NavbarModule } from 'src/app/shared/components/navbar/navbar.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AddUserComponent],
@@ -15,6 +16,7 @@ import { NavbarModule } from 'src/app/shared/components/navbar/navbar.module';
     ReactiveFormsModule,
     CommonTableModule,
     NavbarModule,
+    HttpClientModule,
     RouterModule.forChild([
       {
         path: '',
