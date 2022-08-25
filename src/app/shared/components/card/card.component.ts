@@ -7,10 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   constructor() {}
-  @Input() email = '';
-  @Input() first_name = '';
-  @Input() last_name = '';
-  @Input() avatar = '';
+  @Input() email: any = '';
+  @Input() first_name: any = '';
+  @Input() last_name: any = '';
+  @Input() avatar: any = '';
 
   ngOnInit(): void {}
 }

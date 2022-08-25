@@ -5,9 +5,11 @@ import {
   emailValidator,
   numberValidator,
 } from 'src/app/shared/utility/form-validator';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { downloadFile, resetForm } from 'src/app/shared/utility/utils';
 import { AuthGuardService } from 'src/app/shared/services/auth-guard.service';
+import { Store } from '@ngrx/store';
+import { AddUser } from 'src/app/store/app.action';
+import { User } from 'src/app/store/app.reducer';
 
 @Component({
   selector: 'app-add-user',
@@ -15,7 +17,7 @@ import { AuthGuardService } from 'src/app/shared/services/auth-guard.service';
   styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent implements OnInit {
-  userList: any[] = [];
+  userList: User[] = [];
 
   userColumn: any[] = [
     { field: 'id', displayName: 'Id' },
@@ -48,7 +50,10 @@ export class AddUserComponent implements OnInit {
     }),
   });
 
-  constructor(private apiService: ApiService, private user: AuthGuardService) {}
+  constructor(
+    private user: AuthGuardService,
+    private store: Store<{ usersList: { users: User[] } }>
+  ) {}
 
   get userEmail() {
     return this.user.logeddInUser.email || '';
@@ -74,22 +79,19 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEmployees();
+    this.getUsers();
   }
 
-  getEmployees() {
-    this.apiService
-      .get(`https://reqres.in/api/users`)
-      .then((resp) => {
-        this.userList = resp.data;
-      })
-      .catch((err) => console.error(err));
+  getUsers() {
+    this.store.select('usersList').subscribe((resp) => {
+      console.log(resp);
+      this.userList = resp.users;
+    });
   }
 
   onSubmit() {
     if (this.addUserForm.valid) {
-      console.log(this.addUserForm.value);
-      this.userList.push(this.addUserForm.value);
+      this.store.dispatch(new AddUser(this.addUserForm.value));
       resetForm(this.addUserForm);
       downloadFile(this.userList);
     } else console.log('invalid form');

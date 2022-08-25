@@ -9,7 +9,7 @@
 
 <div class="d-flex flex-wrap">
   <common-card
-    *ngFor="let user of allUsers"
+    *ngFor="let user of (allUsers | async)?.users"
     [avatar]="user.avatar"
     [email]="user.email"
     [last_name]="user.last_name"
