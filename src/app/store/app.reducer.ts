@@ -20,6 +20,18 @@ const initialUserState = {
 
 export function UserReducer(state = initialUserState, action: UserActions) {
   switch (action.type) {
+    case UserActionTypes.GETUSERS:
+      return {
+        ...state,
+        users: [],
+        authError: null,
+      };
+    case UserActionTypes.GETUSERSFAILED:
+      return {
+        ...state,
+        users: [],
+        authError: action.payload,
+      };
     case UserActionTypes.ADDUSER:
       return {
         ...state,
@@ -32,6 +44,8 @@ export function UserReducer(state = initialUserState, action: UserActions) {
       };
 
     case UserActionTypes.USERLOGIN:
+      sessionStorage.setItem('user', JSON.stringify(action.payload));
+
       return {
         ...state,
         loggedInUser: action.payload,

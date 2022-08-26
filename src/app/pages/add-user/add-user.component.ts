@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from 'src/app/shared/services/api.service';
 import {
   emailValidator,
   numberValidator,
 } from 'src/app/shared/utility/form-validator';
 import { downloadFile, resetForm } from 'src/app/shared/utility/utils';
-import { AuthGuardService } from 'src/app/shared/services/auth-guard.service';
 import { Store } from '@ngrx/store';
 import { AddUser } from 'src/app/store/app.action';
 import { User } from 'src/app/store/app.reducer';
@@ -49,15 +47,9 @@ export class AddUserComponent implements OnInit {
       updateOn: 'blur',
     }),
   });
+  userEmail: any;
 
-  constructor(
-    private user: AuthGuardService,
-    private store: Store<{ usersList: { users: User[] } }>
-  ) {}
-
-  get userEmail() {
-    return this.user.logeddInUser.email || '';
-  }
+  constructor(private store: Store<{ usersList: { users: User[] } }>) {}
 
   updateValidator(field: string) {
     const field2 = field == 'last_name' ? 'first_name' : 'last_name';
@@ -83,9 +75,14 @@ export class AddUserComponent implements OnInit {
   }
 
   getUsers() {
-    this.store.select('usersList').subscribe((resp) => {
-      console.log(resp);
-      this.userList = resp.users;
+    this.store.select('usersList').subscribe(({ loggedInUser, users }: any) => {
+      this.userEmail = loggedInUser.email;
+      if (loggedInUser?.email && this.userEmail != loggedInUser.email) {
+        this.userEmail = loggedInUser.email;
+      }
+      if (users) {
+        this.userList = users;
+      }
     });
   }
 

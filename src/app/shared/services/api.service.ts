@@ -17,7 +17,7 @@ export class ApiService {
       );
   }
 
-  get<T>(endpoint: string): Promise<any> {
-    return this.http.get(endpoint).pipe(this.processApiResponse()).toPromise();
+  get<T>(endpoint: string): Observable<any> {
+    return this.http.get(endpoint).pipe(this.processApiResponse());
   }
 }

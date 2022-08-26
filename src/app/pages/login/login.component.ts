@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { emailValidator } from 'src/app/shared/utility/form-validator';
-import { AddUser, LoggedInUser } from 'src/app/store/app.action';
+import { LoggedInUser } from 'src/app/store/app.action';
 import { User } from 'src/app/store/app.reducer';
 
 @Component({
@@ -28,15 +28,22 @@ export class LoginComponent implements OnInit {
     }),
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.autoLogin();
+  }
+
+  autoLogin() {
+    let user: any = sessionStorage.getItem('user');
+    user = user ? JSON.parse(user) : null;
+    if (user?.email) {
+      this.store.dispatch(new LoggedInUser(user));
+      this.goToDashboard();
+    }
+  }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      //ngrx
       this.store.dispatch(new LoggedInUser(this.loginForm.value));
-      //session storage
-      sessionStorage.setItem('user', JSON.stringify(this.loginForm.value));
-
       this.goToDashboard();
     } else console.log('invlaid form');
   }
